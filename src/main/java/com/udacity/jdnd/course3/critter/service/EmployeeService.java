@@ -29,7 +29,7 @@ public class EmployeeService {
     public void setEmployeeAvailability(Set<DayOfWeek> daysAvailable, Long employeeId){
         Employee employee = employeeRepository.getOne(employeeId);
         employee.setDaysAvailable(daysAvailable);
-        //employeeRepository.save(employee);
+        employeeRepository.save(employee);
     }
 
     public List<Employee> getEmployeesForService(Set<EmployeeSkill> skills, LocalDate date){
