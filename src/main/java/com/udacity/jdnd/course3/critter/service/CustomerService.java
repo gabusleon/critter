@@ -32,6 +32,8 @@ public class CustomerService {
     }
 
     public Customer getCustomerByPetId(Long petId){
-        return petRepository.getOne(petId).getOwner();
+        //return petRepository.getOne(petId).getOwner();
+        Pet pet = petRepository.getOne(petId);
+        return customerRepository.getOne(pet.getOwner().getId());
     }
 }

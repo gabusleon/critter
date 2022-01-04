@@ -1,5 +1,6 @@
 package com.udacity.jdnd.course3.critter.service;
 
+import com.udacity.jdnd.course3.critter.entity.Customer;
 import com.udacity.jdnd.course3.critter.entity.Pet;
 import com.udacity.jdnd.course3.critter.repository.CustomerRepository;
 import com.udacity.jdnd.course3.critter.repository.PetRepository;
@@ -16,8 +17,14 @@ public class PetService {
     private CustomerRepository customerRepository;
 
     public Pet savePet(Pet pet, Long ownerId){
-        pet.setOwner(customerRepository.getOne(ownerId));
-        return petRepository.save(pet);
+        //System.out.println("Aqui recupera el id: " + ownerId);
+        Customer customer = customerRepository.getOne(ownerId);
+        customer.addPet(pet);
+        pet.setOwner(customer);
+        //System.out.println("La mascota ha guardar es: " + pet);
+        Pet petSaved = petRepository.save(pet);
+        //System.out.println("Pet FGuardada:" + petSaved );
+        return petSaved;
     }
 
     public Pet getPetById(Long petId){
@@ -29,7 +36,7 @@ public class PetService {
     }
 
     public List<Pet> getPetsByOwner(Long ownerId){
-        return petRepository.findPetByCustomerId(ownerId);
+        return petRepository.findPetByOwnerId(ownerId);
     }
 
 }

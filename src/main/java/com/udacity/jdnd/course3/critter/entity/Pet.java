@@ -15,8 +15,10 @@ public class Pet {
     private PetType type;
     @Nationalized
     private String name;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "customer_id")
+    //@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, optional = false)
+    //@JoinColumn(name = "customer_id")
+    //@ManyToOne(targetEntity = Customer.class, optional = false)
+    @ManyToOne
     private Customer owner;
     @Column(name = "birth_date")
     private LocalDate birthDate;
@@ -25,10 +27,9 @@ public class Pet {
     public Pet() {
     }
 
-    public Pet(PetType type, String name, Customer owner, LocalDate birthDate, String notes) {
+    public Pet(PetType type, String name, LocalDate birthDate, String notes) {
         this.type = type;
         this.name = name;
-        this.owner = owner;
         this.birthDate = birthDate;
         this.notes = notes;
     }
@@ -79,5 +80,16 @@ public class Pet {
 
     public void setNotes(String notes) {
         this.notes = notes;
+    }
+
+    @Override
+    public String toString() {
+        return "Pet{" +
+                "id=" + id +
+                ", type=" + type +
+                ", name='" + name + '\'' +
+                ", birthDate=" + birthDate +
+                ", notes='" + notes + '\'' +
+                '}';
     }
 }

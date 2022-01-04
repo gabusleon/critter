@@ -1,8 +1,11 @@
 package com.udacity.jdnd.course3.critter.entity;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.annotations.Nationalized;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -16,13 +19,10 @@ public class Customer {
     private String phoneNumber;
     private String notes;
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "owner", cascade = CascadeType.ALL)
-    private List<Pet> pets;
+    //@OneToMany(targetEntity = Pet.class)
+    private List<Pet> pets = new ArrayList<>();
 
     public Customer() {
-    }
-
-    public Customer(String name) {
-        this.name = name;
     }
 
     public Customer(String name, String phoneNumber, String notes) {
@@ -31,12 +31,6 @@ public class Customer {
         this.notes = notes;
     }
 
-    public Customer(String name, String phoneNumber, String notes, List<Pet> pets) {
-        this.name = name;
-        this.phoneNumber = phoneNumber;
-        this.notes = notes;
-        this.pets = pets;
-    }
 
     public long getId() {
         return id;
@@ -76,5 +70,20 @@ public class Customer {
 
     public void setPets(List<Pet> pets) {
         this.pets = pets;
+    }
+
+    public void addPet(Pet pet){
+        pets.add(pet);
+    }
+
+    @Override
+    public String toString() {
+        return "Customer{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", notes='" + notes + '\'' +
+                ", pets=" + pets +
+                '}';
     }
 }

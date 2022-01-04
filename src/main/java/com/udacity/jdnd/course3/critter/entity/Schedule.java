@@ -12,9 +12,11 @@ public class Schedule {
     @Id
     @GeneratedValue
     private long id;
-    @OneToMany(fetch = FetchType.LAZY)
+    //@OneToMany(fetch = FetchType.LAZY)
+    @ManyToMany
     private List<Employee> employees;
-    @OneToMany(fetch = FetchType.LAZY)
+    //@OneToMany(fetch = FetchType.LAZY)
+    @ManyToMany
     private List<Pet> pets;
     private LocalDate date;
     @ElementCollection
@@ -23,9 +25,7 @@ public class Schedule {
     public Schedule() {
     }
 
-    public Schedule(List<Employee> employees, List<Pet> pets, LocalDate date, Set<EmployeeSkill> activities) {
-        this.employees = employees;
-        this.pets = pets;
+    public Schedule(LocalDate date, Set<EmployeeSkill> activities) {
         this.date = date;
         this.activities = activities;
     }
@@ -68,5 +68,16 @@ public class Schedule {
 
     public void setActivities(Set<EmployeeSkill> activities) {
         this.activities = activities;
+    }
+
+    @Override
+    public String toString() {
+        return "Schedule{" +
+                "id=" + id +
+                ", employees=" + employees +
+                ", pets=" + pets +
+                ", date=" + date +
+                ", activities=" + activities +
+                '}';
     }
 }
